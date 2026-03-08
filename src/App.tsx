@@ -137,7 +137,7 @@ function App() {
 
     
   <main>
-    <h1>Come ON!! PUJA AND DILBAR YOU CAN DO IT!!!</h1>
+    <h1>COME ON!! PUJA AND DILBAR YOU CAN DO IT!!!</h1>
 
     {/* Current Pay Cycle */}
 
