@@ -1,0 +1,9 @@
+services:
+  spend-tracker:
+    build: .
+    container_name: spend-tracker-app
+    ports:
+      - "4173:4173"
+    volumes:
+      - .:/app
+      - /app/node_modules

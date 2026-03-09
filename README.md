@@ -1,14 +1,37 @@
-# Budget Tracker
+# Spend Tracker DevOps Project
 
-A personal budgeting dashboard built with React + Vite.
+A cloud-based personal spend tracker application built with React and Vite, containerized with Docker, and provisioned on Azure using Terraform.
 
-Features:
-- Weekly income tracking
-- Savings allocation
-- Expense tracking
-- Category totals
-- Pay-cycle filtering (Wed–Tue)
-- Local storage persistence
-- Responsive dashboard layout
+## Features
 
-Version: v1.0.0
+- Track weekly income
+- Track expenses
+- Track savings separately
+- Clean React frontend
+- Dockerized application
+- Azure Container Registry integration
+- Infrastructure managed with Terraform
+
+## Tech Stack
+
+- React
+- Vite
+- TypeScript
+- Docker
+- Terraform
+- Microsoft Azure
+
+## Project Structure
+
+```bash
+spend-tracker/
+├── src/
+├── public/
+├── terraform/
+│   ├── main.tf
+│   ├── variables.tf
+│   └── outputs.tf
+├── Dockerfile
+├── .dockerignore
+├── README.md
+└── package.json
