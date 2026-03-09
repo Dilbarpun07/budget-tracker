@@ -35,3 +35,18 @@ spend-tracker/
 ├── .dockerignore
 ├── README.md
 └── package.json
+
+
+```
+Frontend live website:
+Azure Static Web Apps
+
+DevOps/container practice:
+Docker → GitHub Actions → ACR
+
+find .github -type f
+.github/workflows/azure-static-web-apps-happy-mud-012a93300.yml
+.github/workflows/docker-acr.yml
+
+```
+
