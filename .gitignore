@@ -23,3 +23,6 @@ crash.log
 .DS_Store
 *.swp
 *.swo
+
+# RESTRUCTURE.md
+RESTRUCTURE.md

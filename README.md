@@ -65,9 +65,20 @@ find .github -type f
 ## Project Structure
 
 ```bash
-spend-tracker/
-├── src/
-├── public/
+budget-tracker/
+├─ frontend/
+│  ├─ src/
+│  │  ├─ components/
+│  │  ├─ services/
+│  │  ├─ utils/
+│  │  ├─ types/
+│  │  ├─ hooks/
+│  │  ├─ App.tsx
+│  │  └─ main.tsx
+│  ├─ package.json
+│  ├─ tsconfig.json
+│  ├─ vite.config.ts
+│  └─ index.html
 ├── terraform/
 │   ├── main.tf
 │   ├── variables.tf
@@ -78,6 +89,5 @@ spend-tracker/
 ├── Dockerfile
 ├── .dockerignore
 ├── README.md
-└── package.json
-
-
+└── compose.yaml
+```
