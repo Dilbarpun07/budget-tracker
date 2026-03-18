@@ -6,6 +6,7 @@ import { useLocalStorageString } from './hooks/useLocalStorage'
 import { loadExpenses, saveExpenses } from './services/storage'
 import { getPayCycle } from './utils/payCycle'
 import { parseLocalDate } from './utils/date'
+import { formatDateToLocalString } from './utils/date'
 import { calculateCategoryTotals, calculateTotalSpent } from './utils/totals'
 import { toNumberAmount } from './utils/money'
 import { PayCycleBanner } from './components/PayCycleBanner'
@@ -18,15 +19,18 @@ function App() {
   const [savings, setSavings] = useLocalStorageString('savings', '')
   const [expenses, setExpenses] = useState<Expense[]>(() => loadExpenses())
 
-  const [date, setDate] = useState('')
-  const [amount, setAmount] = useState('')
-  const [category, setCategory] = useState('Food')
-  const [note, setNote] = useState('')
+  
+  
+  // Moved to expenseform.tsx
+  // const [date, setDate] = useState('')
+  // const [amount, setAmount] = useState('')
+  // const [category, setCategory] = useState('Food')
+  // const [note, setNote] = useState('')
 
-  const today = new Date()
-  const todayString = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(
-    today.getDate(),
-  ).padStart(2, '0')}`
+  
+
+
+  const todayString = formatDateToLocalString(new Date()) 
   const cycle = getPayCycle(todayString)
 
   const currentCycleExpenses = expenses.filter((expense) => {
@@ -34,7 +38,7 @@ function App() {
     return expenseDate >= cycle.start && expenseDate <= cycle.end
   })
 
-  const totalSpent = calculateTotalSpent(expenses)
+  const totalSpent = calculateTotalSpent(currentCycleExpenses)
   const categoryTotals = calculateCategoryTotals(currentCycleExpenses)
 
   const incomeNumber = toNumberAmount(income)
@@ -54,14 +58,16 @@ function App() {
     const nextExpenses = [...expenses, newExpense]
     setExpenses(nextExpenses)
     saveExpenses(nextExpenses)
-
-    setDate('')
-    setAmount('')
-    setCategory('Food')
-    setNote('')
   }
 
-  const handleDeleteExpense = (id: number) => {
+  //Moved to expenseform.tsx
+  //   setDate('')
+  //   setAmount('')
+  //   setCategory('Food')
+  //   setNote('')
+  // }
+
+  const handleDeleteExpense = (id: Expense['id']) => {
     const nextExpenses = expenses.filter((expense) => expense.id !== id)
     setExpenses(nextExpenses)
     saveExpenses(nextExpenses)
@@ -69,7 +75,8 @@ function App() {
 
   return (
     <main>
-      <h1>COME ON!! PUJA AND DILBAR YOU CAN DO IT!!!</h1>
+      <h1>Budget Tracker</h1>
+      <p>Track your income, savings, and expenses for each pay cycle.</p>
 
       <div className="dashboard-grid">
         <PayCycleBanner cycle={cycle} />
@@ -94,7 +101,8 @@ function App() {
           />
         </section>
 
-        <ExpenseForm
+ {/* Moved to expenseform.tsx */}
+        {/* <ExpenseForm
           date={date}
           amount={amount}
           category={category}
@@ -104,7 +112,9 @@ function App() {
           onCategoryChange={setCategory}
           onNoteChange={setNote}
           onAddExpense={handleAddExpense}
-        />
+        /> */}
+
+        <ExpenseForm onAddExpense={handleAddExpense} />
 
         <SummaryCards summary={summary} categoryTotals={categoryTotals} />
 

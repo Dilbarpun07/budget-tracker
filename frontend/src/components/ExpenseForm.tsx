@@ -1,112 +1,111 @@
+import { useState } from 'react'
 import type { Expense } from '../types/expense'
 
-const categories = [
-  'Food',
-  'Fuel',
-  'Rent',
-  'Bills',
-  'Shopping',
-  'Entertainment',
-  'Transport',
-  'Health',
-  'Other',
-]
-
 type ExpenseFormProps = {
-  date: string
-  amount: string
-  category: string
-  note: string
-  onDateChange: (value: string) => void
-  onAmountChange: (value: string) => void
-  onCategoryChange: (value: string) => void
-  onNoteChange: (value: string) => void
   onAddExpense: (expense: Expense) => void
 }
 
-export function ExpenseForm({
-  date,
-  amount,
-  category,
-  note,
-  onDateChange,
-  onAmountChange,
-  onCategoryChange,
-  onNoteChange,
-  onAddExpense,
-}: ExpenseFormProps) {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
+// const categories = [
+//   'Food',
+//   'Fuel',
+//   'Rent',
+//   'Bills',
+//   'Shopping',
+//   'Entertainment',
+//   'Transport',
+//   'Health',
+//   'Other',
+// ]
 
-    if (!date || !amount || !category) return
+export function ExpenseForm({ onAddExpense }: ExpenseFormProps) {
+const [date, setDate] = useState('')
+const [amount, setAmount] = useState('')
+const [category, setCategory] = useState('Food')
+const [note, setNote] = useState('')
 
-    const newExpense: Expense = {
-      id: Date.now(),
-      date,
-      amount,
-      category,
-      note,
-    }
+const handleSubmit = (event: React.FormEvent) => {
+  event.preventDefault()
 
-    onAddExpense(newExpense)
+  const newExpense = {
+    id: Date.now(),
+    date,
+    amount,
+    category,
+    note,
   }
 
-  return (
-    <section className="card card-wide">
-      <h2>Add Expense</h2>
+  onAddExpense(newExpense)
 
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Date</label>
-          <br />
-          <input type="date" value={date} onChange={(e) => onDateChange(e.target.value)} />
-        </div>
+  setDate('')
+  setAmount('')
+  setCategory('Food')
+  setNote('')
 
-        <br />
+}
 
-        <div>
-          <label>Amount</label>
-          <br />
-          <input
-            type="number"
-            placeholder="Enter amount"
-            value={amount}
-            onChange={(e) => onAmountChange(e.target.value)}
-          />
-        </div>
+// type ExpenseFormProps = {
+//   date: string
+//   amount: string
+//   category: string
+//   note: string
+//   onDateChange: (value: string) => void
+//   onAmountChange: (value: string) => void
+//   onCategoryChange: (value: string) => void
+//   onNoteChange: (value: string) => void
+//   onAddExpense: (expense: Expense) => void
+// }
 
-        <br />
+// export function ExpenseForm({
+//   date,
+//   amount,
+//   category,
+//   note,
+//   onDateChange,
+//   onAmountChange,
+//   onCategoryChange,
+//   onNoteChange,
+//   onAddExpense,
+// }: ExpenseFormProps) {
+  
 
-        <div>
-          <label>Category</label>
-          <br />
-          <select value={category} onChange={(e) => onCategoryChange(e.target.value)}>
-            {categories.map((item) => (
-              <option key={item} value={item}>
-                {item}
-              </option>
-            ))}
-          </select>
-        </div>
+return (
+  <section className="card">
+    <h2>Add Expense</h2>
 
-        <br />
+    <form onSubmit={handleSubmit}>
+      <input
+        type="date"
+        value={date}
+        onChange={(event) => setDate(event.target.value)}
+      />
 
-        <div>
-          <label>Note</label>
-          <br />
-          <input
-            type="text"
-            placeholder="Optional"
-            value={note}
-            onChange={(e) => onNoteChange(e.target.value)}
-          />
-        </div>
+      <input
+        type="number"
+        placeholder="Amount"
+        value={amount}
+        onChange={(event) => setAmount(event.target.value)}
+      />
 
-        <br />
+      <select
+        value={category}
+        onChange={(event) => setCategory(event.target.value)}
+      >
+        <option value="Food">Food</option>
+        <option value="Transport">Transport</option>
+        <option value="Bills">Bills</option>
+        <option value="Other">Other</option>
+      </select>
 
-        <button type="submit">Add Expense</button>
-      </form>
-    </section>
-  )
+      <input
+        type="text"
+        placeholder="Note"
+        value={note}
+        onChange={(event) => setNote(event.target.value)}
+      />
+
+      <button type="submit">Add Expense</button>
+    </form>
+  </section>
+)
 }
 
