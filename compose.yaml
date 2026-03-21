@@ -1,9 +1,49 @@
 services:
+
+  # PostgreSQL database
+  db:
+    image: postgres:16-alpine
+    container_name: spend-tracker-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: budget_tracker
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Express API backend
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: spend-tracker-api
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/budget_tracker
+      PORT: 3001
+      CORS_ORIGIN: http://localhost:4173
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # React frontend
   spend-tracker:
     build: .
     container_name: spend-tracker-app
     ports:
       - "4173:4173"
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
+    depends_on:
+      - api
+
+volumes:
+  postgres_data:
